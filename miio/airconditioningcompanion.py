@@ -13,8 +13,9 @@ _LOGGER = logging.getLogger(__name__)
 MODEL_ACPARTNER_V1 = "lumi.acpartner.v1"
 MODEL_ACPARTNER_V2 = "lumi.acpartner.v2"
 MODEL_ACPARTNER_V3 = "lumi.acpartner.v3"
+MODEL_ACPARTNER_MCN02 = "lumi.acpartner.mcn02"
 
-MODELS_SUPPORTED = [MODEL_ACPARTNER_V1, MODEL_ACPARTNER_V2, MODEL_ACPARTNER_V3]
+MODELS_SUPPORTED = [MODEL_ACPARTNER_V1, MODEL_ACPARTNER_V2, MODEL_ACPARTNER_V3, MODEL_ACPARTNER_MCN02]
 
 
 class AirConditioningCompanionException(DeviceException):

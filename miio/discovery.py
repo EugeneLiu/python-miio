@@ -44,6 +44,7 @@ from .airconditioningcompanion import (
     MODEL_ACPARTNER_V1,
     MODEL_ACPARTNER_V2,
     MODEL_ACPARTNER_V3,
+    MODEL_ACPARTNER_MCN02,
 )
 from .airhumidifier import (
     MODEL_HUMIDIFIER_CA1,
@@ -146,6 +147,7 @@ DEVICE_MAP = {
     "lumi-acpartner-v1": partial(AirConditioningCompanion, model=MODEL_ACPARTNER_V1),
     "lumi-acpartner-v2": partial(AirConditioningCompanion, model=MODEL_ACPARTNER_V2),
     "lumi-acpartner-v3": partial(AirConditioningCompanion, model=MODEL_ACPARTNER_V3),
+    "lumi-acpartner-mcn02": partial(AirConditioningCompanion, model=MODEL_ACPARTNER_MCN02),
     "lumi-camera-aq2": AqaraCamera,
     "yeelink-light-": Yeelight,
     "zhimi-fan-v2": partial(Fan, model=MODEL_FAN_V2),
