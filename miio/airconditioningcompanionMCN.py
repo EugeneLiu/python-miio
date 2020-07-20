@@ -1,7 +1,7 @@
 import enum
 import random
 import logging
-from typing import Optional
+from typing import Optional, Any
 
 from .click_common import EnumType, command, format_output
 from .device import Device
@@ -22,7 +22,6 @@ class AirConditioningCompanionException(DeviceException):
 
 
 class OperationMode(enum.Enum):
-    # 模式 M0 制冷 M1 制热 M2 自动 M3 送风 M4 除湿
     Cool = "M0"
     Heat = "M1"
     Auto = "M2"
@@ -31,21 +30,25 @@ class OperationMode(enum.Enum):
 
 
 class FanSpeed(enum.Enum):
-    # 风速 S0 自动 S1 低速 S2 中速 S3 高速
     Auto = "S0"
     Low = "S1"
     Medium = "S2"
     High = "S3"
 
 
+class FanSpeedCommand(enum.Enum):
+    Auto = "auto_fan"
+    Low = "small_fan"
+    Medium = "medium_fan"
+    High = "large_fan"
+
+
 class SwingMode(enum.Enum):
-    # 扫风 D0 开启 D999 关闭
     On = "D0"
     Off = "D999"
 
 
 class Power(enum.Enum):
-    # P1 关机 P0 开机
     On = "P0"
     Off = "P1"
 
@@ -76,7 +79,7 @@ class AirConditioningCompanionStatus:
     @property
     def power(self) -> str:
         """Current power state."""
-        return "on" if int(self.state[0]) == Power.On.value else "off"
+        return "on" if int(Power(self.state[0]).value) == Power.On.value else "off"
 
     @property
     def is_on(self) -> bool:
@@ -166,7 +169,6 @@ class AirConditioningCompanionMcn02(Device):
             "",
             "Power: {result.power}\n"
             "Load power: {result.load_power}\n"
-            "Air Condition model: {result.air_condition_model}\n"
             "Target temperature: {result.target_temperature} °C\n"
             "Swing mode: {result.swing_mode}\n"
             "Fan speed: {result.fan_speed}\n"
@@ -187,3 +189,12 @@ class AirConditioningCompanionMcn02(Device):
     def off(self):
         """Turn the air condition off by infrared."""
         return self.send("set_power", ["off"])
+
+    @command(
+        default_output=format_output("Sending a command to the air conditioner"),
+    )
+    def send_command(self, command: str, parameters: Any = None) -> Any:
+        """Send a command to the air conditioner.
+
+        :param str command: Command to execute"""
+        return self.send(command, parameters)
