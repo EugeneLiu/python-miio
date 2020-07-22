@@ -69,17 +69,16 @@ class AirConditioningCompanionStatus:
         """
         self.data = data
         self.state = data["state"]
-        self.load_power = data["load_power"]
 
     @property
     def load_power(self) -> int:
         """Current power load of the air conditioner."""
-        return int(self.load_power)
+        return int(self.data.get('load_power', 0))
 
     @property
     def power(self) -> str:
         """Current power state."""
-        return "on" if int(Power(self.state[0]).value) == Power.On.value else "off"
+        return "on" if Power(self.state[0]).name == Power.On.name else "off"
 
     @property
     def is_on(self) -> bool:
